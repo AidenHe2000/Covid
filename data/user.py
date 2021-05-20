@@ -19,6 +19,10 @@ if __name__ == '__main__':
         else:
             user_gender = '女'
             user_name = fake.name_female()
+        
+        if random.randint(0, 1) == 0:
+            role=rolechoice[0]
+        else:
             role=rolechoice[1]
         password=fake.password(length=10, special_chars=True, digits=True, upper_case=True, lower_case=True)
         user_email=fake.ascii_free_email()

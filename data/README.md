@@ -8,6 +8,7 @@ The codes used to generate data.
 | :---------- | :----------------- |
 | doctor.py   | generate doctors   |
 | hospital.py | generate hospitals |
+| user.py     | generate users     |
 
 ---
 

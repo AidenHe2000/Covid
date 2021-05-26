@@ -11,11 +11,11 @@ if __name__ == '__main__':
            '肾内科', '血液内科', '免疫科', '内分泌科',
            '心胸外科', '泌尿外科', '心血管外科', '肝胆外科',
            '儿科', '消化内科', '消化内科', '消化内科']
-    size = 100
+    size = 100000
     i = 1
     while i <= size:
         doctor_id = i
-        hospital_id = random.randint(1, 9999)
+        hospital_id = random.randint(1, 30000)
         if random.randint(0, 1) == 0:
             doctor_gender = '男'
             doctor_name = fake.name_male()

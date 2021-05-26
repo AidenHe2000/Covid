@@ -34,4 +34,4 @@ if __name__ == '__main__':
         lst.append(t)
         i = i + 1
     result = pd.DataFrame(data=lst)
-    result.to_csv('user5.csv')
+    result.to_csv('user.csv')

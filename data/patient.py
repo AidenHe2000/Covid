@@ -7,12 +7,12 @@ if __name__ == '__main__':
     fake = Faker(locale='zh_CN')
     lst = []
     statuschoice=["死亡","治疗中","痊愈"]
-    size = 100
+    size = 1000000
     i = 1
     while i <= size:
         patient_id = i
-        hospital_id=random.randint(1,size)
-        doctor_id=random.randint(1,size)
+        hospital_id=random.randint(1,30000)
+        doctor_id=random.randint(1,100000)
         if random.randint(0, 1) == 0:
             patient_gender = '男'
             patient_name = fake.name_male()

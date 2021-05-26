@@ -7,12 +7,12 @@ if __name__ == '__main__':
     fake = Faker(locale='zh_CN')
     lst = []
     symptomchoice=["头晕","胸闷","发热","乏力","干咳","鼻塞","流涕","咽痛","腹泻","低氧血症","休克"]
-    size = 100
+    size = 1000000
     i = 1
     while i <= size:
         dignosis_id=i
-        patient_id = random.randint(1,size)
-        doctor_id=random.randint(1,size)
+        patient_id = random.randint(1,1000000)
+        doctor_id=random.randint(1,100000)
         
         #get date and time
         d=fake.date_between_dates(date_start=datetime.date(2020,1,1),date_end=datetime.date(2021,5,10))

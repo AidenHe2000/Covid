@@ -4,7 +4,7 @@ import pandas as pd
 if __name__ == '__main__':
     fake = Faker(locale='zh_CN')
     lst = []
-    size = 30000
+    size = 10000
     i = 1
     while i <= size:
         hospital_id = i

@@ -15,7 +15,7 @@ if __name__ == '__main__':
     i = 1
     while i <= size:
         doctor_id = i
-        hospital_id = random.randint(1, 30000)
+        hospital_id = random.randint(1, 10000)
         if random.randint(0, 1) == 0:
             doctor_gender = '男'
             doctor_name = fake.name_male()
@@ -24,7 +24,7 @@ if __name__ == '__main__':
             doctor_name = fake.name_female()
         doctor_birthday = fake.date(pattern='%Y-%m-%d', end_datetime=datetime.date(1991, 1, 1))
         department = dep[random.randint(0, len(dep) - 1)]
-        t = [doctor_id, doctor_name, doctor_gender, doctor_birthday, department, hospital_id]
+        t = [doctor_id, hospital_id, doctor_name, doctor_gender, doctor_birthday, department]
         lst.append(t)
         i = i + 1
     result = pd.DataFrame(data=lst)

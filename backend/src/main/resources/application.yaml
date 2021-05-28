@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: covid-backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/covid
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+  jpa: # show the generated SQL
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 8888
+
+pagehelper:
+  helper-dialect: PostgreSQL
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+logging:
+  level:
+    com.covid.backend.dao: debug

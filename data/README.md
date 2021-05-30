@@ -21,8 +21,18 @@ Data will be generated into a `csv` file.
 
 ---
 
-Use the `sql` file to create tables and indices.
-We use the `PostgreSQL` dialect.
+- Use the `sql` file to create tables and indices.
+  We use the `PostgreSQL` dialect.
+
+- After import the `csv` files make sure to set the current serial of the table to the maximum of the current primary key.
+
+  - e.g.
+
+    ```sql
+    select setval('medicine_medicine_id_seq',max(medicine_id)) from medicine;
+    ```
+
+    
 
 ---
 

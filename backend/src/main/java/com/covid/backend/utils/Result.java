@@ -22,10 +22,6 @@ public class Result<T> {
     public static final int CODE_UNAUTHORIZED = 401;
     public static final int CODE_FORBIDDEN = 403;
 
-    public Result() {
-        this(200, "ok");
-    }
-
     public Result(int code, String message) {
         this.success = code == 200;
         this.code = code;
@@ -44,21 +40,13 @@ public class Result<T> {
         return new Result(CODE_ERROR, message);
     }
 
-//    public static Result error(int code, String message) {
-//        return new Result(code, message);
-//    }
-
-//    public static Result error(int code, String message, Object dataObject) {
-//        return new Result(code, dataObject, message);
-//    }
-
     public static Result error(String message, Object dataObject) {
         return new Result(CODE_ERROR, dataObject, message);
     }
 
-    public static Result ok() {
-        return new Result();
-    }
+//    public static Result ok() {
+//        return new Result(CODE_SUCCESS, "ok");
+//    }
 
     public static Result ok(Object dataObject) {
         return new Result(CODE_SUCCESS, dataObject, "ok");
@@ -76,7 +64,7 @@ public class Result<T> {
         return r;
     }
 
-    public T getData() {
-        return this.data;
-    }
+//    public T getData() {
+//        return this.data;
+//    }
 }

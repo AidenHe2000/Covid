@@ -12,7 +12,7 @@ spring:
     show-sql: true
 
 server:
-  port: 8888
+  port: 8181
 
 pagehelper:
   helper-dialect: PostgreSQL

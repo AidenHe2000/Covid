@@ -5,7 +5,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/covid
     driver-class-name: org.postgresql.Driver
     username: postgres
-    password: postgres
+    password: 4869
   jpa: # show the generated SQL
     hibernate:
       ddl-auto: update

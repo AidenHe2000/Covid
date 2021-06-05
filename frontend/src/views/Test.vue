@@ -1,34 +1,23 @@
 <template>
-  <v-container fluid>
+  <v-container fluid autocomplete="off">
     <v-row align="center">
-      <v-col class="d-flex" cols="12" sm="6">
-        <v-select
-          :items="items"
-          label="Standard"
-        ></v-select>
+      <v-col cols="6">
+        <v-subheader>
+          Custom items
+        </v-subheader>
       </v-col>
 
-      <v-col class="d-flex" cols="12" sm="6">
+      <v-col cols="6">
         <v-select
+          v-model="select"
+          :hint="`${select.state}, ${select.abbr}`"
           :items="items"
-          filled
-          label="Filled style"
-        ></v-select>
-      </v-col>
-
-      <v-col class="d-flex" cols="12" sm="6">
-        <v-select
-          :items="items"
-          label="Outlined style"
-          outlined
-        ></v-select>
-      </v-col>
-
-      <v-col class="d-flex" cols="12" sm="6">
-        <v-select
-          :items="items"
-          label="Solo field"
-          solo
+          item-text="state"
+          item-value="abbr"
+          label="Select"
+          persistent-hint
+          return-object
+          single-line
         ></v-select>
       </v-col>
     </v-row>
@@ -37,8 +26,17 @@
 
 <script>
   export default {
-    data: () => ({
-      items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
-    }),
+    data () {
+      return {
+        select: { state: 'Florida', abbr: 'FL' },
+        items: [
+          { state: 'Florida', abbr: 'FL' },
+          { state: 'Georgia', abbr: 'GA' },
+          { state: 'Nebraska', abbr: 'NE' },
+          { state: 'California', abbr: 'CA' },
+          { state: 'New York', abbr: 'NY' },
+        ],
+      }
+    },
   }
 </script>

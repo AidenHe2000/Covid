@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- <v-container fluid>
+        <v-container fluid>
             <v-row align="center">
             <v-col class="d-flex" cols="12" sm="6">
                 <v-select :items="manufacturers" label="生产厂商" v-model="manufacturer"></v-select>
@@ -11,25 +11,8 @@
             </v-col>
             
             </v-row>
-        </v-container> -->
-        生产厂家
-        <select v-model="manufacturer" style="background-color:grey">
-            <option>任意</option>
-            <option>白云</option>
-            <option>葵花</option>
-            <option>何氏</option>
-            <option>徐氏</option>
-            <option>周氏</option>
-            <option>康泰克</option>
-            <option>泰诺</option>
-        </select>
-
-        药物种类
-        <select v-model="type" style="background-color:grey">
-            <option>任意</option>
-            <option>中药</option>
-            <option>西药</option>
-        </select>
+        </v-container>
+        
         
         <v-form>
             <v-container>

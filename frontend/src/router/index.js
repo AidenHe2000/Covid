@@ -4,6 +4,11 @@ import Home from '../views/Home.vue'
 import Medicine from '../views/Medicine.vue'
 import About from '../views/About.vue'
 import Test from '../views/Test.vue'
+import Doctor from '../views/Doctor.vue'
+import Patient from '../views/Patient.vue'
+import Debug from '../views/debug.vue'
+import Diagnosis from '../views/Diagnosis.vue'
+import AllPatients from '../views/AllPatients.vue'
 
 Vue.use(VueRouter)
 
@@ -26,6 +31,31 @@ const routes = [
     path:'/medicine',
     name: 'Medicine',
     component:Medicine
+  },
+  {
+    path:'/doctor',
+    name: 'Doctor',
+    component:Doctor
+  },
+  {
+    path:'/debug',
+    name: 'Debug',
+    component:Debug
+  },
+  {
+    path:'/patient',
+    name: 'Patient',
+    component:Patient
+  },
+  {
+    path:'/diagnosis',
+    name: 'Diagnosis',
+    component:Diagnosis
+  },
+  {
+    path:'/allPatients',
+    name: 'AllPatients',
+    component:AllPatients
   },
   {
     path:'/test',

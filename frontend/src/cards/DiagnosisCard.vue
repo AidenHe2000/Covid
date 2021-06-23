@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- <temperature-chart :diagnosis-items="diagnosisItems"></temperature-chart> -->
-    <p style="color:red">haha</p>
+    <temperature-chart :diagnosis-items="diagnosisItems"></temperature-chart>
+    
     <v-card>
       <v-card-title>诊断记录
         <v-spacer></v-spacer>
@@ -28,29 +28,25 @@
               {{item.doctor_name}}
             </div>
           </v-fade-transition>
-
         </template>
 
         <template v-slot:[`item.nucleic_acid`]="{ item }">
           <div v-if="item.nucleic_acid=='阳性'">
-            <v-chip  color="red" label text-color="white">
+            <v-chip class="ma-2" color="red" outlined>
               <v-icon left>
-                mdi-label
+                  mdi-emoticon-frown
               </v-icon>
               {{item.nucleic_acid}}
             </v-chip>
           </div>
           <div v-else>
-            <v-chip class="ma-2" color="success" outlined>
+            <v-chip class="ma-2" color="green" outlined>
                 <v-icon left>
-                    mdi-server-plus
+                    mdi-emoticon-happy-outline
                 </v-icon>
                 {{item.nucleic_acid}}
             </v-chip>
           </div>
-          <!-- <v-chip :color="item.nucleic_acid=='阳性'?'error':'red'" text-color="green" >
-            {{item.nucleic_acid}}
-          </v-chip> -->
         </template>
 
         <!-- <template v-slot:[`item.curd`]="{ item }" v-if="editable">
@@ -79,7 +75,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
   import TemperatureChart from '../charts/TemperatureChart'
   // import DiagnosisCreator from '../picker/DiagnosisCreator'
 
@@ -102,13 +97,12 @@
           { text: '#', value: 'diagnosis_id' },
           { text: '诊断医生', value: 'doctor_name', },
           { text: '诊断时间', value: 'time' },
-          { text: '体温', value: 'temperature' },
+          { text: '体温(℃)', value: 'temperature' },
           { text: '核酸检测', value: 'nucleic_acid' },
           { text: '症状', value: 'symptom' }
         ],
         diagnosisItems: [],
         temperatureLineChartData: [],
-        
         pg:1,
         size:5000
       }
@@ -135,6 +129,7 @@
           })
           .finally(() => {
             this.loading = false;
+            console.log(this.diagnosisItems)
           })
     },
 

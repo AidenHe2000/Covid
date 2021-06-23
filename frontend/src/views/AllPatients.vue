@@ -178,17 +178,17 @@
       return{
         options: {},
         loading: true,
-        search: "",
-        date: "",
+        search: null,
+        date: null,
         menu: false,
         timer: -1,
         rawdata: {},
         conditions: {
-          gender: "",
-          patient_name: "",
-          onset_place: "",
-          onset_date: "",
-          status: ""
+          gender: null,
+          patient_name: null,
+          onset_place: null,
+          onset_date: null,
+          status: null
         },
         expanded_patient_id: -1,
 
@@ -218,44 +218,44 @@
         }
       }
     },
-    created()
-    { 
-        this.loading = true;
-        this.patients.data = [];
-        const { sortBy, sortDesc, page, itemsPerPage } = this.options
-        // let queryParams = {
-        //   page: page,
-        //   size: itemsPerPage == -1 ? 100 : itemsPerPage,
-        //   // patient_name: this.search,
-        //   // onset_place: this.search
-        // };
-        // if(!["不限", ""].includes(this.conditions.status)) {
-        //   queryParams.status = this.conditions.status;
-        // }
-        // if(!["不限", ""].includes(this.conditions.gender)){
-        //   queryParams.gender = this.conditions.gender == "男"  ? "M" : "F";
-        // }
-        // queryParams.patient_name = this.conditions.patient_name || this.search;
-        // queryParams.onset_place = this.conditions.onset_place;
-        // queryParams.onset_date = this.conditions.onset_date;
-        // axios.get('http://localhost:8181/patient/getPatientInfo', {params: queryParams})
-        axios.get('http://localhost:8181/patient/getPatientInfo', {params:{page:1,size:10000}})
-          .then(response => {
-            if(response.data.success == true)
-            {
-              console.log(response.data.data);
-              this.rawdata = response.data.data;
-              this.patients.total_length = Number(response.data.totalCount);
-              this.patients.data = this.dataFilter(this.rawdata)
-            }
-            else
-              throw new Error(response.data.message)
-          })
-          .catch(error => {
-            alert('无法连接到服务器，刷新重试。\n' + error.message);
-          })
-        .finally(() => this.loading = false);
-    },
+    // created()
+    // { 
+    //     this.loading = true;
+    //     this.patients.data = [];
+    //     const { sortBy, sortDesc, page, itemsPerPage } = this.options
+    //     // let queryParams = {
+    //     //   page: page,
+    //     //   size: itemsPerPage == -1 ? 100 : itemsPerPage,
+    //     //   // patient_name: this.search,
+    //     //   // onset_place: this.search
+    //     // };
+    //     // if(!["不限", ""].includes(this.conditions.status)) {
+    //     //   queryParams.status = this.conditions.status;
+    //     // }
+    //     // if(!["不限", ""].includes(this.conditions.gender)){
+    //     //   queryParams.gender = this.conditions.gender == "男"  ? "M" : "F";
+    //     // }
+    //     // queryParams.patient_name = this.conditions.patient_name || this.search;
+    //     // queryParams.onset_place = this.conditions.onset_place;
+    //     // queryParams.onset_date = this.conditions.onset_date;
+    //     // axios.get('http://localhost:8181/patient/getPatientInfo', {params: queryParams})
+    //     axios.get('http://localhost:8181/patient/getPatientInfo', {params:{page:10,size:10000}})
+    //       .then(response => {
+    //         if(response.data.success == true)
+    //         {
+    //           console.log(response.data.data);
+    //           this.rawdata = response.data.data;
+    //           this.patients.total_length = Number(response.data.totalCount);
+    //           this.patients.data = this.dataFilter(this.rawdata)
+    //         }
+    //         else
+    //           throw new Error(response.data.message)
+    //       })
+    //       .catch(error => {
+    //         alert('无法连接到服务器，刷新重试。\n' + error.message);
+    //       })
+    //     .finally(() => this.loading = false);
+    // },
     methods: {
 
       dataFilter: (datainput) => datainput.map(one => {
@@ -274,19 +274,22 @@
         const { sortBy, sortDesc, page, itemsPerPage } = this.options
         let queryParams = {
           page: page,
-          size: itemsPerPage == -1 ? 100 : itemsPerPage,
+          size: 10000,
           patient_name: this.search,
           onset_place: this.search
         };
-        if(!["不限", ""].includes(this.conditions.status)) {
-          queryParams.status = this.conditions.status;
-        }
-        if(!["不限", ""].includes(this.conditions.gender)){
-          queryParams.gender = this.conditions.gender == "男"  ? "M" : "F";
-        }
-        queryParams.patient_name = this.conditions.patient_name || this.search;
+        // if(!["不限", ""].includes(this.conditions.status)) {
+        //   queryParams.status = this.conditions.status;
+        // }
+        // if(!["不限", ""].includes(this.conditions.gender)){
+        //   queryParams.gender = this.conditions.gender == "男"  ? "M" : "F";
+        // }
+        if(queryParams.patient_name=="")
+          queryParams.patient_name=null;
+        // queryParams.patient_name = this.conditions.patient_name || this.search;
         queryParams.onset_place = this.conditions.onset_place;
         queryParams.onset_date = this.conditions.onset_date;
+        console.log(queryParams);
         axios.get('http://localhost:8181/patient/getPatientInfo', {params: queryParams})
           .then(response => {
             if(response.data.success == true){

@@ -12,10 +12,13 @@
             
             </v-row>
         </v-container>
-        
+        <v-progress-linear indeterminate color="yellow darken-2"></v-progress-linear>
+                <br>
         
         <v-form>
             <v-container>
+                <v-progress-linear indeterminate color="yellow darken-2"></v-progress-linear>
+                <br>
             <v-row>
                 <v-col cols="12" sm="6">
                     <v-text-field label="药名" outlined shaped v-model="name">

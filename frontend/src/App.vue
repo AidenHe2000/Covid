@@ -1,11 +1,16 @@
 <template>
-  <div id="app" data-app>
+  <v-app id="app" data-app>
     <div id="nav">
       <router-link to="/medicine">Medicine</router-link> |
-      <router-link to="/test">Test</router-link>
+      <router-link to="/test">Test</router-link> |
+      <router-link to="/doctor">Doctor</router-link> |
+      <router-link to="/patient">Patient</router-link> |
+      <router-link to="/debug">debug</router-link> |
+      <router-link to="/diagnosis">diagnosis</router-link> |
+      <router-link to="/allPatients">AllPatients</router-link> |
     </div>
     <router-view/>
-  </div>
+  </v-app>
 </template>
 
 <style>

@@ -92,7 +92,7 @@
 
 
             <v-card :loading="loading">
-<!--              <v-card-title>病人简历</v-card-title>
+             <v-card-title>病人简历</v-card-title>
               <v-list dense>
                     <v-subheader>ID: {{patient_id}}）</v-subheader>
                   <template v-for="(item, index) in detailListItems">
@@ -105,7 +105,7 @@
                       <v-list-item-content>
                         <v-list-item-title>
                           <v-slide-x-reverse-transition leave-absolute >
-                            <span v-if="!item.editing">
+                            <span v-if="item.editing">
                               <span v-if="item.model.includes('doctor')">
                                 {{item.value}} （{{patientDatail.data.department}}）
                               </span>
@@ -147,9 +147,11 @@
                         <v-list-item-subtitle>{{item.description}}</v-list-item-subtitle>
                       </v-list-item-content>
                       <v-list-item-action>
-                        <v-btn  v-if="editable && item.editable" icon v-on:click="detailListItems.forEach(one =>{if(one !== item) {one.editing = false}}); item.editing = !item.editing">
-                          <v-icon color="grey" v-if="!item.editing"
-                          >mdi-pencil-box</v-icon>
+                        <v-btn  v-if="editable && item.editable" icon 
+                        v-on:click="detailListItems.forEach(one =>
+                        {if(one !== item) {one.editing = false}}); 
+                        item.editing = !item.editing">
+                          <v-icon color="grey" v-if="!item.editing">mdi-pencil-box</v-icon>
                           <v-icon color="green light-2" v-else>mdi-checkbox-marked</v-icon>
                         </v-btn>
                         <hospital-doctor-picker v-else-if="item.model.includes('doctor') && editable"
@@ -162,7 +164,7 @@
                     </v-list-item>
                     <v-divider v-if="item.divider"></v-divider>
                   </template>
-                </v-list>-->
+                </v-list>
             </v-card> 
 
             <prescription-card  class="my-6" :editable="editable" :patient_id="patient_id"
@@ -202,15 +204,15 @@
 
   import axios from 'axios'
   // import Config from '../global/Config'
-  // import DatePicker from '../picker/DatePicker'     DatePicker
-  // import HospitalDoctorPicker from '../picker/HospitalDoctorPicker'   HospitalDoctorPicker,
-  // import PrescriptionCard from './PrescriptionCard' PrescriptionCard,  
+  import DatePicker from '../picker/DatePicker'     
+  import HospitalDoctorPicker from '../picker/HospitalDoctorPicker'   
+  import PrescriptionCard from '../cards/PrescriptionCard'   
   import DiagnosisCard from '../cards/DiagnosisCard'
 
   export default {
 
     name: 'PatientDetail',
-    components: { DiagnosisCard,  },
+    components: { DatePicker,HospitalDoctorPicker,PrescriptionCard,DiagnosisCard  },
     props: {
       patient_id: {
         type: Number,
@@ -325,13 +327,13 @@
 
       fetchDetail() {
         this.loading = true;
-        axios.post(Config.apiurl + '/patient/getPatientInfoByID', null, {params: {
+        axios.get('http://localhost:8181/patient/getPatientInfoById', {params: {
           patient_id: this.patient_id
           }})
           .then(response => {
             if(response.data.success == true){
               let rawdata = response.data.data;
-              rawdata.patient_gender = rawdata.patient_gender == 'F' ? '女' : '男';
+              rawdata.patient_gender = rawdata.patient_gender;
               rawdata.patient_birthday = new Date(rawdata.patient_birthday).toISOString().substring(0, 10);
               rawdata.onset_date = new Date(rawdata.onset_date).toISOString().substring(0, 10);
               rawdata.confirm_date = new Date(rawdata.confirm_date).toISOString().substring(0, 10);
@@ -364,8 +366,8 @@
         this.loading = true;
         this.confirm_dialog = false;
         let new_patient = this.patientDatail.data;
-        new_patient.patient_gender = new_patient.patient_gender == '男' ? 'M' : 'F';
-        axios.post(Config.apiurl + '/patient/updatePatient', null, { params: new_patient})
+        new_patient.patient_gender = new_patient.patient_gender;
+        axios.get('http://localhost:8181/patient/updatePatient', { params: new_patient})
         .then(response => {
           if(response.data.success == true){
             this.popSnack("已保存。");
@@ -390,7 +392,7 @@
       deletePatient() {
         this.loading = true;
         this.confirm_delete_dialog = false;
-        axios.post(Config.apiurl + '/patient/deletePatientByID', null, { params: {
+        axios.get('http://localhost:8181/patient/deletePatientByID',{ params: {
           patient_id: this.patient_id
           }})
         .then(response => {
@@ -429,13 +431,13 @@
         handler() {
           if(this.dialog == true){
             this.fetchDetail();
-            // this.$refs.prescreptionCard.fetchPrescription();
-            // this.$refs.diagnosisCard.fetchPrescription();
-            // this.fetchDiagnosis();
+            this.$refs.prescreptionCard.fetchPrescription();
+            this.$refs.diagnosisCard.fetchPrescription();
+            this.fetchDiagnosis();
           }
           else {
             // Dialog closed
-            // this.$emit('close', 'Dialog closed');
+            this.$emit('close', 'Dialog closed');
           }
         }
       },

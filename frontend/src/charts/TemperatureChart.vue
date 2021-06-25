@@ -41,6 +41,7 @@
             }
           ]
         };
+        
         this.diagnosisItems.sort((a, b) => {
           let dateA = new Date(a.time);
           let dateB = new Date(b.time);
@@ -50,6 +51,7 @@
           chartData.labels.push(one.time.substring(5));
           chartData.datasets[0].data.push(one.temperature);
         })
+        console.log(chartData);
         return chartData;
       }
     }

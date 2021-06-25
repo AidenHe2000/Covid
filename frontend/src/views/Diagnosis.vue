@@ -20,8 +20,7 @@
         no-data-text="无匹配数据"
       >
 
-        <v-progress-linear indeterminate color="yellow darken-2"></v-progress-linear>
-        <br>
+        
         <template v-slot:[`item.doctor_name`]="{ item }">
           <v-fade-transition mode="out-in">
             <div :key="item.doctor_name">

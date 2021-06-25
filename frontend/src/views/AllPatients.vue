@@ -72,9 +72,6 @@
               </v-col>
             </v-row>
 
-            
-          
-
 
             <v-row>
               <v-col sm="4">
@@ -169,8 +166,6 @@
   export default {
     name: 'query',
     components: {
-      
-      
       Patient,
     },
 
@@ -240,8 +235,10 @@
           patient_name: this.search,
           onset_place: this.search
         };
-        
-        queryParams.patient_name = this.conditions.patient_name
+        if(this.conditions)
+        queryParams.gender = this.conditions.gender;
+        queryParams.status = this.conditions.status;
+        queryParams.patient_name = this.conditions.patient_name;
         queryParams.onset_place = this.conditions.onset_place;
         queryParams.onset_date = this.conditions.onset_date;
         console.log(queryParams);
@@ -259,7 +256,14 @@
           .catch(error => {
             alert('无法连接到服务器，刷新重试。\n' + error.message);
           })
-        .finally(() => this.loading = false);
+        .finally(() => {
+          this.loading = false
+          this.conditions.gender=null;
+          this.conditions.status=null;
+          this.conditions.patient_name=null;
+          this.conditions.onset_place=null;
+          this.conditions.onset_date=null;
+        });
       },
 
       displayDetail(patientID){

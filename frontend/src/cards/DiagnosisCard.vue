@@ -1,6 +1,6 @@
 <template>
   <div>
-    <temperature-chart :diagnosis-items="diagnosisItems"></temperature-chart>
+    <temperature-chart :diagnosis-items="diagnosisItems" ref="diagnosisCard"></temperature-chart>
     
     <v-card>
       <v-card-title>诊断记录

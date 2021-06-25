@@ -9,6 +9,7 @@ import Patient from '../views/Patient.vue'
 import Debug from '../views/debug.vue'
 import Diagnosis from '../views/Diagnosis.vue'
 import AllPatients from '../views/AllPatients.vue'
+import TemperatureChart from '../charts/TemperatureChart.vue'
 
 Vue.use(VueRouter)
 
@@ -57,6 +58,11 @@ const routes = [
     name: 'AllPatients',
     component:AllPatients
   },
+  // {
+  //   path:'/TemperatureChart',
+  //   name: 'AllPatients',
+  //   component:AllPatients
+  // },
   {
     path:'/test',
     name:'Test',

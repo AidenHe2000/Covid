@@ -1,5 +1,7 @@
 <template>
+  
   <v-app class="text-center">
+    <v-icon>mdi-pencil-box</v-icon>
     <v-chip
       class="ma-2"
       label

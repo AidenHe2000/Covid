@@ -218,44 +218,6 @@
         }
       }
     },
-    // created()
-    // { 
-    //     this.loading = true;
-    //     this.patients.data = [];
-    //     const { sortBy, sortDesc, page, itemsPerPage } = this.options
-    //     // let queryParams = {
-    //     //   page: page,
-    //     //   size: itemsPerPage == -1 ? 100 : itemsPerPage,
-    //     //   // patient_name: this.search,
-    //     //   // onset_place: this.search
-    //     // };
-    //     // if(!["不限", ""].includes(this.conditions.status)) {
-    //     //   queryParams.status = this.conditions.status;
-    //     // }
-    //     // if(!["不限", ""].includes(this.conditions.gender)){
-    //     //   queryParams.gender = this.conditions.gender == "男"  ? "M" : "F";
-    //     // }
-    //     // queryParams.patient_name = this.conditions.patient_name || this.search;
-    //     // queryParams.onset_place = this.conditions.onset_place;
-    //     // queryParams.onset_date = this.conditions.onset_date;
-    //     // axios.get('http://localhost:8181/patient/getPatientInfo', {params: queryParams})
-    //     axios.get('http://localhost:8181/patient/getPatientInfo', {params:{page:10,size:10000}})
-    //       .then(response => {
-    //         if(response.data.success == true)
-    //         {
-    //           console.log(response.data.data);
-    //           this.rawdata = response.data.data;
-    //           this.patients.total_length = Number(response.data.totalCount);
-    //           this.patients.data = this.dataFilter(this.rawdata)
-    //         }
-    //         else
-    //           throw new Error(response.data.message)
-    //       })
-    //       .catch(error => {
-    //         alert('无法连接到服务器，刷新重试。\n' + error.message);
-    //       })
-    //     .finally(() => this.loading = false);
-    // },
     methods: {
 
       dataFilter: (datainput) => datainput.map(one => {
@@ -264,36 +226,28 @@
           one.patient_birthday = one.patient_birthday.substring(0, 10);
           one.onset_place = one.onset_place.length > 6 ? one.onset_place.substring(0,5) + "..." : one.onset_place;
           one.hospital_name = one.hospital_name.length > 6 ? one.hospital_name.substring(0, 5) + "..." : one.hospital_name;
-          one.gender = one.patient_gender == 'F' ? "女" : "男";
+          one.gender = one.patient_gender;
           return one;
         }),
 
       fetchData() {
         this.loading = true;
         this.patients.data = [];
-        const { sortBy, sortDesc, page, itemsPerPage } = this.options
+        // const { sortBy, sortDesc, page, itemsPerPage } = this.options
         let queryParams = {
-          page: page,
-          size: 10000,
+          page: 1,
+          size: 100,
           patient_name: this.search,
           onset_place: this.search
         };
-        // if(!["不限", ""].includes(this.conditions.status)) {
-        //   queryParams.status = this.conditions.status;
-        // }
-        // if(!["不限", ""].includes(this.conditions.gender)){
-        //   queryParams.gender = this.conditions.gender == "男"  ? "M" : "F";
-        // }
-        if(queryParams.patient_name=="")
-          queryParams.patient_name=null;
-        // queryParams.patient_name = this.conditions.patient_name || this.search;
+        
+        queryParams.patient_name = this.conditions.patient_name
         queryParams.onset_place = this.conditions.onset_place;
         queryParams.onset_date = this.conditions.onset_date;
         console.log(queryParams);
         axios.get('http://localhost:8181/patient/getPatientInfo', {params: queryParams})
           .then(response => {
             if(response.data.success == true){
-              console.log(response.data.data);
               this.rawdata = response.data.data;
               this.patients.total_length = Number(response.data.totalCount);
               this.patients.data = this.dataFilter(this.rawdata)
@@ -322,12 +276,12 @@
       search: {
         handler() {
           this.loading = true;
-          this.conditions.patient_name = "";
+          this.conditions.patient_name =null;
           clearTimeout(this.timer);
           this.timer = setTimeout(() => {
             this.fetchData();
           }, 600);
-          // this.fetchData();
+          
         }
       },
       expanded_patient_id: {

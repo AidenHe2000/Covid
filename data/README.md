@@ -5,15 +5,15 @@ The codes used to generate data.
 ---
 
 | file name       | description           | scale now |
-| :-------------- | :-------------------- | ---------: |
-| doctor.py       | generate doctors      | 100,000    |
-| hospital.py     | generate hospitals    | 10,000     |
-| user.py         | generate users        | 200,000   |
-| diagnosis.py    | generate diagnosis    | 4,000,000   |
-| image.py        | generate images       | 2,000,000   |
-| patient.py      | generate patients     | 600,000   |
-| medicine.py     | generate medicine     | 84        |
-| prescription.py | generate prescription | 400,000   |
+| :-------------: | :-------------------: | ---------: |
+| [doctor.py](./doctor.py)       | generate doctors      | 100,000    |
+| [hospital.py](./hospital.py)     | generate hospitals    | 10,000     |
+| [user.py](./user.py)         | generate users        | 200,000   |
+| [diagnosis.py](./diagnosis.py)    | generate diagnosis    | 4,000,000   |
+| [image.py](./image.py)        | generate images       | 2,000,000   |
+| [patient.py](./patient.py)      | generate patients     | 600,000   |
+| [medicine.py](./medicine.py)     | generate medicine     | 84        |
+| [prescription.py](./prescription.py) | generate prescription | 400,000   |
 
 ---
 

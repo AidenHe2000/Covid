@@ -31,7 +31,7 @@ public interface PatientMapper {
     @Insert("insert into patient(patient_name, patient_gender, patient_birthday, onset_place, onset_date, confirm_date, status, doctor_id, hospital_id, is_doctor) values (#{patient_name}, #{patient_gender}, #{patient_birthday}, #{onset_place}, #{onset_date}, #{confirm_date}, #{status}, cast(#{doctor_id} as integer), cast(#{hospital_id} as integer), #{is_doctor})")
     int insertPatient(Patient patient);
 
-    @Update("update patient set patient_name=#{patient_name}, patient_gender=#{patient_gender}, patient_birthday=#{patient_birthday}, onset_place=#{onset_place}, onset_date=#{onset_date}, confirm_date=#{confirm_date}, status=#{status}, doctor_id=cast(#{doctor_id} as integer), hospital_id=cast(#{hospital_id} as integer), is_doctor=#{is_doctor} where patient_id=#{patient_id}")
+    @Update("update patient set patient_name=#{patient_name}, patient_gender=#{patient_gender}, patient_birthday=cast(#{patient_birthday} as timestamp), onset_place=#{onset_place}, onset_date=cast(#{onset_date}as timestamp), confirm_date=cast(#{confirm_date}as timestamp), status=#{status}, doctor_id=cast(#{doctor_id} as integer), hospital_id=cast(#{hospital_id} as integer), is_doctor=cast(#{is_doctor} as integer) where patient_id=#{patient_id}")
     int updatePatient(Patient patient);
 
     @Delete("delete from patient where patient_id = #{patient_id}")

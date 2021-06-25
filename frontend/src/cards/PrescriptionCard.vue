@@ -63,7 +63,7 @@
 
     props: {
       patientModel: Object,
-      patient_id: String,
+      patient_id: Number,
       editable: Boolean
     },
 

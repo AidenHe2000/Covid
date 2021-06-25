@@ -189,7 +189,6 @@
 
 <script>
   import axios from 'axios'
-  // import Config from '../global/Config'
 
   export default {
     name: 'HospitalDoctorPicker',
@@ -305,11 +304,11 @@
         this.loadingDoctor = this.loadingHospital = false;
         return;
       }
-      axios.post(Config.apiurl + "/doctor/getDoctorInfoByID", null, {params: {
+      axios.get("http://localhost:8181/doctor/getDoctorInfoById",{params: {
           doctor_id: this.doctor_id
         }}).then(response => {
         this.selected_doctor_model = response.data.data;
-        axios.post(Config.apiurl + "/hospital/getHospitalInfoByID", null, {params: {
+        axios.get("http://localhost:8181/hospital/getHospitalInfoById",{params: {
             hospital_id: this.selected_doctor_model.hospital_id
           }}).then(response => {
           this.selected_hospital_model = response.data.data;

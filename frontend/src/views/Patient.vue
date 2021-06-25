@@ -92,9 +92,9 @@
 
 
             <v-card :loading="loading">
-             <v-card-title>病人简历</v-card-title>
+<!--              <v-card-title>病人简历</v-card-title>-->
               <v-list dense>
-                    <v-subheader>ID: {{patient_id}}）</v-subheader>
+<!--                    <v-subheader>ID: {{patient_id}}）</v-subheader>-->
                   <template v-for="(item, index) in detailListItems">
                     <v-list-item two-line>
                       <v-list-item-avatar>
@@ -105,7 +105,7 @@
                       <v-list-item-content>
                         <v-list-item-title>
                           <v-slide-x-reverse-transition leave-absolute >
-                            <span v-if="item.editing">
+                            <span v-if="!item.editing">
                               <span v-if="item.model.includes('doctor')">
                                 {{item.value}} （{{patientDatail.data.department}}）
                               </span>
@@ -147,11 +147,9 @@
                         <v-list-item-subtitle>{{item.description}}</v-list-item-subtitle>
                       </v-list-item-content>
                       <v-list-item-action>
-                        <v-btn  v-if="editable && item.editable" icon 
-                        v-on:click="detailListItems.forEach(one =>
-                        {if(one !== item) {one.editing = false}}); 
-                        item.editing = !item.editing">
-                          <v-icon color="grey" v-if="!item.editing">mdi-pencil-box</v-icon>
+                        <v-btn  v-if="editable && item.editable" icon v-on:click="detailListItems.forEach(one =>{if(one !== item) {one.editing = false}}); item.editing = !item.editing">
+                          <v-icon color="grey" v-if="!item.editing"
+                          >mdi-pencil-box</v-icon>
                           <v-icon color="green light-2" v-else>mdi-checkbox-marked</v-icon>
                         </v-btn>
                         <hospital-doctor-picker v-else-if="item.model.includes('doctor') && editable"
@@ -165,7 +163,7 @@
                     <v-divider v-if="item.divider"></v-divider>
                   </template>
                 </v-list>
-            </v-card> 
+            </v-card>
 
             <prescription-card  class="my-6" :editable="editable" :patient_id="patient_id"
                                 :patient-model="patientDatail.data"
@@ -222,7 +220,7 @@
       editable: {
         type: Boolean,
         required: false,
-        default: false
+        default: true
       }
     },
     data() {
@@ -254,7 +252,7 @@
             description: "姓名",
             model: "patient_name",
             value: this.patientDatail.data.patient_name,
-            editing: false,
+            editing: true,
             editable: true
           },
           {
@@ -262,7 +260,7 @@
             description: "性别",
             model: "patient_gender",
             value: this.patientDatail.data.patient_gender,
-            editing: false,
+            editing: true,
             editable: true
           },
           {
@@ -270,7 +268,7 @@
             description: "生日",
             model: "patient_birthday",
             value: this.patientDatail.data.patient_birthday,
-            editing: false,
+            editing: true,
             editable: true
           },
           {
@@ -278,7 +276,7 @@
             description: "发病地点",
             model: "onset_place",
             value: this.patientDatail.data.onset_place,
-            editing: false,
+            editing: true,
             editable: true
           },
           {
@@ -286,7 +284,7 @@
             description: "发病日期",
             model: "onset_date",
             value: this.patientDatail.data.onset_date,
-            editing: false,
+            editing: true,
             editable: true
           },
           {
@@ -319,7 +317,7 @@
             description: "当前状态",
             model: "status",
             value: this.patientDatail.data.status,
-            editing: false,
+            editing: true,
             editable: true
           },
         ]
@@ -366,7 +364,8 @@
         this.loading = true;
         this.confirm_dialog = false;
         let new_patient = this.patientDatail.data;
-        new_patient.patient_gender = new_patient.patient_gender;
+        
+        console.log(new_patient);
         axios.get('http://localhost:8181/patient/updatePatient', { params: new_patient})
         .then(response => {
           if(response.data.success == true){
@@ -392,7 +391,7 @@
       deletePatient() {
         this.loading = true;
         this.confirm_delete_dialog = false;
-        axios.get('http://localhost:8181/patient/deletePatientByID',{ params: {
+        axios.get('http://localhost:8181/patient/deletePatientById',{ params: {
           patient_id: this.patient_id
           }})
         .then(response => {

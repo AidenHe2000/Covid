@@ -1,48 +1,56 @@
 <template>
-  
-  <v-app class="text-center">
-    <v-icon>mdi-pencil-box</v-icon>
-    <v-chip
-      class="ma-2"
-      label
-    >
-      Label
-    </v-chip>
+  <v-card
+    height="400"
+    width="256"
+    class="mx-auto"
+  >
+    <v-navigation-drawer>
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="title">
+            Application
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            subtext
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
 
-    <v-chip
-      
-      color="red"
-      label
-      text-color="white"
-    >
-      <v-icon left>
-        mdi-label
-      </v-icon>
-      Tags
-    </v-chip>
+      <v-divider></v-divider>
 
-    <v-chip
-      class="ma-2"
-      color="primary"
-      label
-    >
-      <v-icon left>
-        mdi-account-circle-outline
-      </v-icon>
-      John Leider
-    </v-chip>
+      <v-list
+        dense
+        nav
+      >
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
 
-    <v-chip
-      class="ma-2"
-      close
-      color="cyan"
-      label
-      text-color="white"
-    >
-      <v-icon left>
-        mdi-twitter
-      </v-icon>
-      New Tweets
-    </v-chip>
-  </v-app>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+  </v-card>
 </template>
+
+<script>
+  export default {
+    data () {
+      return {
+        items: [
+          { title: 'Dashboard', icon: 'mdi-view-dashboard' },
+          { title: 'Photos', icon: 'mdi-image' },
+          { title: 'About', icon: 'mdi-help-box' },
+        ],
+        right: null,
+      }
+    },
+  }
+</script>

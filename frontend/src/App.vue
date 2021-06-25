@@ -8,6 +8,9 @@
       <router-link to="/debug">debug</router-link> |
       <router-link to="/diagnosis">diagnosis</router-link> |
       <router-link to="/allPatients">AllPatients</router-link> |
+      <router-link to="/checkin">Checkin</router-link> |
+      <router-link to="/pageHeader">pageHeader</router-link> |
+      
     </div>
     <router-view/>
   </v-app>

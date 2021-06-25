@@ -50,8 +50,8 @@
         this.diagnosisItems.forEach(one => {
           chartData.labels.push(one.time.substring(5));
           chartData.datasets[0].data.push(one.temperature);
+          
         })
-        console.log(chartData);
         return chartData;
       }
     }

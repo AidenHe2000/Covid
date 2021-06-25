@@ -10,6 +10,9 @@ import Debug from '../views/debug.vue'
 import Diagnosis from '../views/Diagnosis.vue'
 import AllPatients from '../views/AllPatients.vue'
 import TemperatureChart from '../charts/TemperatureChart.vue'
+import Checkin from '../views/Checkin.vue'
+import PageHeader from '../views/PageHeader.vue'
+
 
 Vue.use(VueRouter)
 
@@ -54,15 +57,21 @@ const routes = [
     component:Diagnosis
   },
   {
+    path:'/checkin',
+    name: 'Checkin',
+    component:Checkin
+  },
+  {
+    path:'/pageHeader',
+    name: 'PageHeader',
+    component:PageHeader
+  },
+  {
     path:'/allPatients',
     name: 'AllPatients',
     component:AllPatients
   },
-  // {
-  //   path:'/TemperatureChart',
-  //   name: 'AllPatients',
-  //   component:AllPatients
-  // },
+
   {
     path:'/test',
     name:'Test',

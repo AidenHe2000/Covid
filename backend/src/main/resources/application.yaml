@@ -2,10 +2,10 @@ spring:
   application:
     name: covid-backend
   datasource:
-    url: jdbc:postgresql://localhost:5432/covid?
+    url: jdbc:postgresql://localhost:5432/covid
     driver-class-name: org.postgresql.Driver
     username: postgres
-    password: 4869
+    password: postgres
   jpa: # show the generated SQL
     hibernate:
       ddl-auto: update

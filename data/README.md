@@ -24,7 +24,7 @@ Data will be generated into a `csv` file.
 - Use the `sql` file to create tables and indices.
   We use the `PostgreSQL` dialect.
 
-- After import the `csv` files make sure to set the current serial of the table to the maximum of the current primary key.
+- After import the `csv` files, make sure to set the current serial of the table to the maximum of the current primary key.
 
   - e.g.
 
@@ -32,9 +32,6 @@ Data will be generated into a `csv` file.
     select setval('medicine_medicine_id_seq',max(medicine_id)) from medicine;
     ```
 
-    
-
 ---
 
 > [Faker](https://github.com/joke2k/faker), [Pandas](https://pypi.org/project/pandas/)
-

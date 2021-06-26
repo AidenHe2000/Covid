@@ -13,7 +13,7 @@ public class CreatePatient {
     public CreatePatientService createPatientService;
 
     @GetMapping("/patient/createPatient")
-    public Result createPatient(@RequestParam(value = "name", required = false) String name,
+    public Result createPatient(@RequestParam(value = "name") String name,
                                 @RequestParam(value = "gender", required = false) String gender,
                                 @RequestParam(value = "birthday", required = false) String birthday,
                                 @RequestParam(value = "onset_place", required = false) String onset_place,

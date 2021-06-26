@@ -28,7 +28,7 @@ public interface PatientMapper {
                                                                 @Param("is_doctor") String is_doctor);
 
     @SelectKey(statement = "select nextval('patient_patient_id_seq') as patient_id", keyProperty = "patient_id", before = false, resultType = long.class)
-    @Insert("insert into patient(patient_name, patient_gender, patient_birthday, onset_place, onset_date, confirm_date, status, doctor_id, hospital_id, is_doctor) values (#{patient_name}, #{patient_gender}, #{patient_birthday}, #{onset_place}, #{onset_date}, #{confirm_date}, #{status}, cast(#{doctor_id} as integer), cast(#{hospital_id} as integer), #{is_doctor})")
+    @Insert("insert into patient(patient_name, patient_gender, patient_birthday, onset_place, onset_date, confirm_date, status, doctor_id, hospital_id, is_doctor) values (#{patient_name}, #{patient_gender}, cast(#{patient_birthday} as timestamp), #{onset_place}, cast(#{onset_date}as timestamp), cast(#{confirm_date}as timestamp), #{status}, cast(#{doctor_id} as integer), cast(#{hospital_id} as integer), cast(#{is_doctor} as integer))")
     int insertPatient(Patient patient);
 
     @Update("update patient set patient_name=#{patient_name}, patient_gender=#{patient_gender}, patient_birthday=cast(#{patient_birthday} as timestamp), onset_place=#{onset_place}, onset_date=cast(#{onset_date}as timestamp), confirm_date=cast(#{confirm_date}as timestamp), status=#{status}, doctor_id=cast(#{doctor_id} as integer), hospital_id=cast(#{hospital_id} as integer), is_doctor=cast(#{is_doctor} as integer) where patient_id=#{patient_id}")

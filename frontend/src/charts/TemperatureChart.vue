@@ -13,20 +13,22 @@
 </template>
 
 <script>
-
+  import LineChart from "./LineChart.js"
   export default {
     name: 'TemperatureChart',
-
-    props: {
-      diagnosisItems: Array,
-    },
-
+    components: {LineChart},
+    
+    props:{
+      diagnosisItems:Array,
+      chartData:Array
+    } ,
+    
     data() {
       return {
         panel: 0
       }
     },
-
+    
     computed: {
       chartData() {
         let chartData = {
@@ -48,10 +50,11 @@
           return dateA - dateB;
         })
         this.diagnosisItems.forEach(one => {
-          chartData.labels.push(one.time.substring(5));
+          if(one.time)
+            chartData.labels.push(one.time.substring(5));
           chartData.datasets[0].data.push(one.temperature);
-          
         })
+
         return chartData;
       }
     }

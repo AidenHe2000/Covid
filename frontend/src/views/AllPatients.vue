@@ -157,7 +157,7 @@
 </template>
 
 <script lang="js">
-
+  import SideNavigation from "./SideNavigation";
   // import PageHeader from '../components/PageHeader'     PageHeader,
   // import TextCard from '../components/TextCard'    TextCard
   // import Config from '../components/global/Config'
@@ -167,6 +167,7 @@
     name: 'query',
     components: {
       Patient,
+      SideNavigation
     },
 
     data() {

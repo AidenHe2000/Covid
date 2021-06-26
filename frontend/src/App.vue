@@ -1,20 +1,31 @@
 <template>
   <v-app id="app" data-app>
+    <side-navigation></side-navigation>
+    <v-divider></v-divider>
+    <v-content>
     <div id="nav">
-      <router-link to="/medicine">Medicine</router-link> |
-      <router-link to="/test">Test</router-link> |
-      <router-link to="/doctor">Doctor</router-link> |
-      <router-link to="/patient">Patient</router-link> |
-      <router-link to="/debug">debug</router-link> |
-      <router-link to="/diagnosis">diagnosis</router-link> |
-      <router-link to="/allPatients">AllPatients</router-link> |
-      <router-link to="/checkin">Checkin</router-link> |
-      <router-link to="/pageHeader">pageHeader</router-link> |
-      
+      <router-link to="/medicine"></router-link> 
+      <router-link to="/test"></router-link> 
+      <router-link to="/doctor"></router-link> 
+      <router-link to="/patient"></router-link> 
+      <router-link to="/debug"></router-link> 
+      <router-link to="/diagnosis"></router-link> 
+      <router-link to="/allPatients"></router-link> 
+      <router-link to="/checkin"></router-link> 
+      <router-link to="/pageHeader"></router-link> 
     </div>
     <router-view/>
+    </v-content>
   </v-app>
 </template>
+
+<script>
+  import SideNavigation from "./views/SideNavigation";
+  export default {
+    components:{SideNavigation}
+  }
+</script>
+
 
 <style>
 #app {

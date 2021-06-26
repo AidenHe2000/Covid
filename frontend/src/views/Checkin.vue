@@ -1,11 +1,13 @@
 <template>
     <div>
-      <page-header
+      <!-- <page-header
         icon="mdi-pencil-circle-outline"
         title="病患登记"
         date=""
-      />
-
+      /> -->
+      
+        
+      <v-content>
       <v-card>
         <v-card-title>新患者登记</v-card-title>
         <v-card-subtitle>当前数据库内已有 {{totalPatientLength || '...'}} 位患者数据。</v-card-subtitle>
@@ -156,7 +158,9 @@
           </v-btn>
         </template>
       </v-snackbar>
+      </v-content>
     </div>
+  
 </template>
 
 <script>
@@ -164,13 +168,13 @@
   import DatePicker from '../picker/DatePicker'
   import HospitalDoctorPicker from '../picker/HospitalDoctorPicker'
   import MedicinePicker from '../picker/MedicinePicker'
-  
+  import SideNavigation from './SideNavigation'
   import Patient from './Patient'
   // import error from '../layouts/error'
 
   export default {
     name: 'checkin',
-    components: { Patient, MedicinePicker, HospitalDoctorPicker, DatePicker, PageHeader },
+    components: { Patient, MedicinePicker, HospitalDoctorPicker, DatePicker, PageHeader,SideNavigation },
     data() {
       return {
         showError: false,

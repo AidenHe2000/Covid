@@ -1,70 +1,74 @@
 <template>
     <div>
-        <v-container fluid>
-            <v-row align="center">
-            <v-col class="d-flex" cols="12" sm="6">
-                <v-select :items="manufacturers" label="生产厂商" v-model="manufacturer"></v-select>
-            </v-col>
-
-            <v-col class="d-flex" cols="12" sm="6">
-                <v-select :items="types" label="药物种类" v-model="type"></v-select>
-            </v-col>
-            
-            </v-row>
-        </v-container>
         
-        
-        <v-form>
-            <v-container>
-            <v-row>
-                <v-col cols="12" sm="6">
-                    <v-text-field label="药名" outlined shaped v-model="name">
-                        <input type="text" id="name">
-                    </v-text-field>
+        <v-content>
+            <v-container fluid>
+                <v-row align="center">
+                <v-col class="d-flex" cols="12" sm="6">
+                    <v-select :items="manufacturers" label="生产厂商" v-model="manufacturer"></v-select>
                 </v-col>
 
-                <v-col cols="12" sm="6">
-                    <v-text-field label="药物介绍" outlined shaped v-model="introduction">
-                        <input type="text" id="introduction">
-                    </v-text-field>
+                <v-col class="d-flex" cols="12" sm="6">
+                    <v-select :items="types" label="药物种类" v-model="type"></v-select>
                 </v-col>
                 
-                <v-col cols="12" sm="6">
-                    <v-text-field label="显示页数" outlined shaped v-model="pg">
-                        <input type="text" id="page">
-                    </v-text-field>
-                </v-col>
-
-                <v-col cols="12" sm="6">
-                    <v-text-field label="显示记录数" outlined shaped v-model="len">
-                        <input type="text" id="SIZE">
-                    </v-text-field>
-                </v-col>
-            </v-row>
+                </v-row>
             </v-container>
-        </v-form>
         
-         
-        <!-- <input type="button" value="search" @click="search()" append-icon="mdi-magnify" label="Search"><br> -->
-        <v-btn @click="search()">SEARCH
-            <v-icon>mdi-magnify</v-icon>
-        </v-btn>
+        
+            <v-form>
+                <v-container>
+                <v-row>
+                    <v-col cols="12" sm="6">
+                        <v-text-field label="药名" outlined shaped v-model="name">
+                            <input type="text" id="name">
+                        </v-text-field>
+                    </v-col>
 
-        <v-card>
-            <v-card-title>
-            <!-- <v-text-field v-model="srh" append-icon="mdi-magnify" label="Search" 
-                single-line hide-details>
-            </v-text-field> -->
-            </v-card-title>
-            <v-data-table :headers="headers" :items="medicine"></v-data-table>
-        </v-card>
-        
+                    <v-col cols="12" sm="6">
+                        <v-text-field label="药物介绍" outlined shaped v-model="introduction">
+                            <input type="text" id="introduction">
+                        </v-text-field>
+                    </v-col>
+                    
+                    <v-col cols="12" sm="6">
+                        <v-text-field label="显示页数" outlined shaped v-model="pg">
+                            <input type="text" id="page">
+                        </v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6">
+                        <v-text-field label="显示记录数" outlined shaped v-model="len">
+                            <input type="text" id="SIZE">
+                        </v-text-field>
+                    </v-col>
+                </v-row>
+                </v-container>
+            </v-form>
+            
+            
+            <!-- <input type="button" value="search" @click="search()" append-icon="mdi-magnify" label="Search"><br> -->
+            <v-btn @click="search()">SEARCH
+                <v-icon>mdi-magnify</v-icon>
+            </v-btn>
+
+            <v-card>
+                <v-card-title>
+                <!-- <v-text-field v-model="srh" append-icon="mdi-magnify" label="Search" 
+                    single-line hide-details>
+                </v-text-field> -->
+                </v-card-title>
+                <v-data-table :headers="headers" :items="medicine"></v-data-table>
+            </v-card>
+        </v-content>
     </div>
 </template>
 
 <script>
+import SideNavigation from "./SideNavigation";
 export default {
     name:"Medicine",
+    components:{SideNavigation},
     data()
     {
         return {

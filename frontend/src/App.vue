@@ -4,15 +4,11 @@
     <v-divider></v-divider>
     <v-content>
     <div id="nav">
-      <router-link to="/medicine"></router-link> 
-      <router-link to="/test"></router-link> 
-      <router-link to="/doctor"></router-link> 
+      <router-link to="/medicine"></router-link>  
       <router-link to="/patient"></router-link> 
-      <router-link to="/debug"></router-link> 
       <router-link to="/diagnosis"></router-link> 
       <router-link to="/allPatients"></router-link> 
       <router-link to="/checkin"></router-link> 
-      <router-link to="/pageHeader"></router-link> 
     </div>
     <router-view/>
     </v-content>

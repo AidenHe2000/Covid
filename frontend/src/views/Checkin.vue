@@ -164,7 +164,6 @@
 </template>
 
 <script>
-  import PageHeader from './PageHeader'   
   import DatePicker from '../picker/DatePicker'
   import HospitalDoctorPicker from '../picker/HospitalDoctorPicker'
   import MedicinePicker from '../picker/MedicinePicker'
@@ -174,7 +173,7 @@
 
   export default {
     name: 'checkin',
-    components: { Patient, MedicinePicker, HospitalDoctorPicker, DatePicker, PageHeader,SideNavigation },
+    components: { Patient, MedicinePicker, HospitalDoctorPicker, DatePicker,SideNavigation },
     data() {
       return {
         showError: false,

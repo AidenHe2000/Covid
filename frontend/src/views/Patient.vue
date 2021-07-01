@@ -92,7 +92,7 @@
 
 
             <v-card :loading="loading">
-<!--              <v-card-title>病人简历</v-card-title>-->
+
               <v-list dense>
 <!--                    <v-subheader>ID: {{patient_id}}）</v-subheader>-->
                   <template v-for="(item, index) in detailListItems">
@@ -201,7 +201,6 @@
 <script>
 
   import axios from 'axios'
-  // import Config from '../global/Config'
   import DatePicker from '../picker/DatePicker'     
   import HospitalDoctorPicker from '../picker/HospitalDoctorPicker'   
   import PrescriptionCard from '../cards/PrescriptionCard'   
@@ -435,7 +434,6 @@
             this.fetchDiagnosis();
           }
           else {
-            // Dialog closed
             this.$emit('close', 'Dialog closed');
           }
         }

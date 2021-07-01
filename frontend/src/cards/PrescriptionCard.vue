@@ -8,6 +8,7 @@
     <v-card-text v-if="prescriptionItems.length > 0">该病人当前的正在使用的处方如下：</v-card-text>
     <v-card-text v-else>该病人下暂无处方记录。</v-card-text>
 
+    
 
     <v-list dense three-line class="pb-6">
         <template v-for="(item, index) in prescriptionItems">
@@ -47,17 +48,17 @@
 
 <script>
   import axios from 'axios'
-  // import Config from '../global/Config'
-  // import PrescriptionCreator from '../picker/PrescriptionCreator'
+  import PrescriptionCreator from '../picker/PrescriptionCreator'
 
   export default {
-    // name: 'PrescriptionCard',
-    // components: { PrescriptionCreator },
+    name: 'PrescriptionCard',
+    components: { PrescriptionCreator },
     data() {
       return {
         loading: true,
         confirm_dialog: {},
         prescriptionItems: [],
+        cnt:0,
       }
     },
 
@@ -74,6 +75,7 @@
     methods: {
       fetchPrescription(){
         this.loading = true;
+        var that = this;
         axios.get('http://localhost:8181/prescription/getPrescriptionInfoByPatientId',  {
           params: {
             patient_id: this.patient_id,
@@ -82,7 +84,9 @@
           }
         })
           .then(response => {
-            this.prescriptionItems = response.data.data;
+            that.prescriptionItems = response.data.data;
+            console.log(that.prescriptionItems);
+            
           })
           .catch(error => {
             alert('获取处方失败：无法连接到服务器，刷新重试。\n' + error.message);

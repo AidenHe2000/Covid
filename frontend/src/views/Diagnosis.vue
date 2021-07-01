@@ -1,199 +1,106 @@
 <template>
-  <div>
-    <temperature-chart :diagnosis-items="diagnosisItems"></temperature-chart>
-    
-    <v-card>
-      <v-card-title>诊断记录
-        <v-spacer></v-spacer>
-        <!-- <diagnosis-creator v-if="editable" :patient-model="patientModel" v-on:change="fetchDiagnosis"></diagnosis-creator> -->
-      </v-card-title>
-      <v-data-table
-        calculate-widths
-        :loading="loading"
-        :headers="diagnosisHeaders"
-        :items="diagnosisItems"
-        :items-per-page="20"
-        :sort-desc="true"
-        multi-sort
-        item-key="diagnosis_id"
-        loading-text="正在加载数据，请稍候"
-        no-data-text="无匹配数据"
-      >
+  <v-card :loading="loading">
+    <v-card-title>处方信息
+    <v-spacer></v-spacer>
+    <prescription-creator v-if="editable"
+                          :patient-model="patientModel" v-on:change="fetchPrescription"></prescription-creator>
+    </v-card-title>
+    {{prescriptionItems.length}}
+  
 
-        
-        <template v-slot:[`item.doctor_name`]="{ item }">
-          <v-fade-transition mode="out-in">
-            <div :key="item.doctor_name">
-              {{item.doctor_name}}
-            </div>
-          </v-fade-transition>
+    <v-card-text v-if="prescriptionItems.length > 0">该病人当前的正在使用的处方如下：</v-card-text>
+    <v-card-text v-else>该病人下暂无处方记录。</v-card-text>
+
+    <v-list dense three-line class="pb-6">
+        <template v-for="(item, index) in prescriptionItems">
+          <v-list-item>
+            <v-list-item-avatar>
+              <span class="medicine-avatar rounded">{{item.medicine_name.substring(0,1)}}</span>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title>{{item.medicine_name}}</v-list-item-title>
+              <v-list-item-subtitle>{{item.usage + '，' + item.dosage}}</v-list-item-subtitle>
+              <v-list-item-subtitle>{{item.manufacturer}}</v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-action v-if="editable">
+              <v-dialog v-model="confirm_dialog[item.prescription_id]" persistent max-width="450">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon color="grey" @click="" v-bind="attrs" v-on="on" :disabled="loading"><v-icon>mdi-trash-can</v-icon></v-btn>
+                </template>
+              </v-dialog>
+            </v-list-item-action>
+          </v-list-item>
+          <v-divider v-if="index + 1 != prescriptionItems.length"></v-divider>
         </template>
+      </v-list>
 
-        <template v-slot:[`item.nucleic_acid`]="{ item }">
-          <div v-if="item.nucleic_acid=='阳性'">
-            <v-chip class="ma-2" color="red" outlined>
-              <v-icon left>
-                  mdi-emoticon-frown
-              </v-icon>
-              {{item.nucleic_acid}}
-            </v-chip>
-          </div>
-          <div v-else>
-            <v-chip class="ma-2" color="green" outlined>
-                <v-icon left>
-                    mdi-emoticon-happy-outline
-                </v-icon>
-                {{item.nucleic_acid}}
-            </v-chip>
-          </div>
-        </template>
-
-        <!-- <template v-slot:[`item.curd`]="{ item }" v-if="editable">
-          <v-dialog v-model="confirm_dialog[item.diagnosis_id]" persistent max-width="500">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon color="grey" @click="null" v-bind="attrs" v-on="on"
-                     :disabled="loading"
-              ><v-icon>mdi-trash-can</v-icon></v-btn>
-            </template>
-            <v-card>
-              <v-card-title>确定删除记录于 {{item.time}} 的诊断吗？</v-card-title>
-              <v-card-text><p>该诊断记录由{{item.doctor_name}}医生登记。该操作无法撤销。</p></v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="red darken-1" text @click="confirm_dialog[item.diagnosis_id] = false">取消</v-btn>
-                <v-btn color="red darken-1" text @click="deleteDiagnosis(item.diagnosis_id)">确定</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </template> -->
-
-      </v-data-table>
-    </v-card>
-  </div>
+  </v-card>
 
 </template>
 
 <script>
-  import TemperatureChart from '../charts/TemperatureChart'
-  // import DiagnosisCreator from '../picker/DiagnosisCreator'
+  import axios from 'axios'
+  import PrescriptionCreator from '../picker/PrescriptionCreator'
 
   export default {
-    components: 
-    {
-      TemperatureChart
-    },
-    props: {
-      editable: Boolean,
-      patient_id: String,
-      patientModel: Object
-    },
-
+    name: 'PrescriptionCard',
+    components: { PrescriptionCreator },
     data() {
       return {
         loading: true,
         confirm_dialog: {},
-        diagnosisHeaders: [
-          { text: '#', value: 'diagnosis_id' },
-          { text: '诊断医生', value: 'doctor_name', },
-          { text: '诊断时间', value: 'time' },
-          { text: '体温(℃)', value: 'temperature' },
-          { text: '核酸检测', value: 'nucleic_acid' },
-          { text: '症状', value: 'symptom' }
-        ],
-        diagnosisItems: [],
-        temperatureLineChartData: [],
-        pg:1,
-        size:5000
+        prescriptionItems: [],
       }
+      
     },
-    created()
-    { 
-        this.loading = true;
-        axios.get('http://localhost:8181/diagnosis/getDiagnosisInfo', {params: {
-            page: 1,
-            size: 250,
-            patient_id: this.patient_id
-          }})
-          .then(response => {
-            let diagnosisData = response.data.data;
-            diagnosisData.map(one => one.doctor_name="加载中...");
-            this.diagnosisItems = diagnosisData;
-            this.diagnosisItems.map(async function(one) {
-              let res = await axios.get('http://localhost:8181/doctor/getDoctorInfoById',{params: {
-                  doctor_id: one.doctor_id
-                }});
-              one.doctor_name = res.data.data.doctor_name;
-              return one;
-            })
-          })
-          .finally(() => {
-            this.loading = false;
-            console.log(this.diagnosisItems)
-          })
+
+    props: {
+      patientModel: Object,
+      patient_id: Number,
+      editable: Boolean
+    },
+
+    mounted() {
+      this.fetchPrescription();
     },
 
     methods: {
-    //   fetchDiagnosis() {
-    //     this.loading = true;
-    //     axios.post(Config.apiurl + '/diagnosis/getDiagnosisInfo', null, {params: {
-    //         page: 1,
-    //         size: 250,
-    //         patient_id: this.patient_id
-    //       }})
-    //       .then(response => {
-    //         let diagnosisData = response.data.data;
-    //         diagnosisData.map(one => one.doctor_name="加载中...");
-    //         this.diagnosisItems = diagnosisData;
-    //         this.diagnosisItems.map(async function(one) {
-    //           one.nucleic_acid = one.nucleic_acid == 1 ? "阳性" : "阴性";
-    //           let res = await axios.post(Config.apiurl + '/doctor/getDoctorInfoByID', null, {params: {
-    //               doctor_id: one.doctor_id
-    //             }});
-    //           one.doctor_name = res.data.data.doctor_name;
-    //           return one;
-    //         })
-    //       })
-    //       .finally(() => {
-    //         this.loading = false;
-    //       })
-    //   },
+      fetchPrescription(){
+        this.loading = true;
+        var that = this;
+        axios.get('http://localhost:8181/prescription/getPrescriptionInfoByPatientId',  {
+          params: {
+            patient_id: 5,
+            page:1,
+            size:50
+          }
+        })
+          .then(response => {
+            that.prescriptionItems = response.data.data;
+            
+          })
+          .catch(error => {
+            alert('获取处方失败：无法连接到服务器，刷新重试。\n' + error.message);
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+      },
 
-    //   deleteDiagnosis(id) {
-    //     this.loading = true;
-    //     this.confirm_dialog[id] = false;
-    //     axios.post(Config.apiurl + '/diagnosis/deleteDiagnosisByID', null, {
-    //       params: {
-    //         diagnosis_id: id
-    //       }
-    //     })
-    //     .then(response => {
-    //       this.$emit('snack', '诊断删除成功');
-    //       for (let i = 0; i < this.diagnosisItems.length; i++){
-    //         if (this.diagnosisItems[i].diagnosis_id == id){
-    //           this.$delete(this.diagnosisItems, i);
-    //         }
-    //       }
-    //     })
-    //     .catch(error => {
-    //       alert('诊断删除失败：无法连接到服务器，刷新重试。\n' + error.message);
-    //     })
-    //     .finally(() => {
-    //       this.loading = false;
-    //     });
-    //   }
-    // },
-
-    // mounted() {
-    //   this.fetchDiagnosis();
-    //   if(this.editable) {
-    //     this.diagnosisHeaders.push({ text: '操作', value: 'curd'})
-    //   }
-    // }
     }
   }
 </script>
 
 <style scoped>
 
-</style>
+  .medicine-avatar {
+    font-size: 130%;
+    font-weight: bold;
+    color: white;
+    padding: 6px 9px;
+    border: #ff8383 10px solid;
+    background-color: #ff8383;
+    border-radius: 50%;
+  }
 
+</style>

@@ -114,7 +114,7 @@
 
 <script>
   import axios from 'axios';
-  // import Config from '../global/Config'
+  
 
   export default {
     name: 'MedicinePicker',
@@ -160,7 +160,7 @@
 
       fetchMedicine() {
         this.loading = true;
-        axios.post(Config.apiurl +  '/medicine/getMedicineInfo', null, {params: {
+        axios.get('http://localhost:8181/medicine/getMedicineInfo',  {params: {
             page: 1,
             size: 2500,
             name: this.searchText

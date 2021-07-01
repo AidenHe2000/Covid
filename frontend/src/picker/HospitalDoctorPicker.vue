@@ -323,7 +323,6 @@
     watch: {
       selected_hospital_model: {
         handler() {
-          console.log(this.selected_hospital_model);
           this.fetchDoctor().then(res =>{
             if(this.mounting) {
               for(let i = 0; i < this.doctors.length; i++){
